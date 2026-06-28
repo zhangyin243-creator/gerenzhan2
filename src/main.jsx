@@ -129,7 +129,7 @@ const strengths = [
 const organicVideo =
   "https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260619_191346_9d19d66e-86a4-47f7-8dc6-712c1788c3b2.mp4";
 
-function DeferredVideo({ src, eager = false, rootMargin = "900px", autoPlay, ...props }) {
+function DeferredVideo({ src, eager = false, rootMargin = "900px", autoPlay, preloadMode = "metadata", ...props }) {
   const videoRef = React.useRef(null);
   const [videoSrc, setVideoSrc] = React.useState(eager ? "" : null);
 
@@ -172,7 +172,7 @@ function DeferredVideo({ src, eager = false, rootMargin = "900px", autoPlay, ...
     <video
       ref={videoRef}
       src={videoSrc || undefined}
-      preload={videoSrc ? "metadata" : "none"}
+      preload={videoSrc ? preloadMode : "none"}
       autoPlay={autoPlay}
       {...props}
     />
@@ -235,7 +235,6 @@ function Hero() {
       <DeferredVideo
         className="hero-video"
         src="/portfolio-assets/hero-loop.mp4"
-        poster="/portfolio-assets/hero-poster.png"
         eager
         autoPlay
         muted
@@ -484,6 +483,8 @@ function ContactFinale() {
       <DeferredVideo
         className="contact-video"
         src={organicVideo}
+        rootMargin="2200px"
+        preloadMode="auto"
         autoPlay
         muted
         loop
@@ -734,18 +735,6 @@ function usePortfolioMotion() {
           },
         },
       );
-
-      gsap.to(".contact-video", {
-        scale: 1.08,
-        yPercent: -4,
-        ease: "none",
-        scrollTrigger: {
-          trigger: ".contact-finale",
-          start: "top bottom",
-          end: "bottom top",
-          scrub: 0.85,
-        },
-      });
 
       window.__portfolioMotion = {
         triggerCount: ScrollTrigger.getAll().length,

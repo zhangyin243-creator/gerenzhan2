@@ -1132,7 +1132,6 @@ section {
   z-index: -3;
   width: 100%;
   height: 100%;
-  filter: brightness(1.36) saturate(1.18) contrast(1.05);
   object-fit: cover;
   object-position: center;
 }
@@ -1142,8 +1141,8 @@ section {
   inset: 0;
   z-index: -2;
   background:
-    radial-gradient(circle at 50% 48%, rgba(216, 194, 162, 0.08), transparent 30%),
-    linear-gradient(180deg, rgba(3, 4, 5, 0.28), rgba(3, 4, 5, 0.2) 48%, rgba(3, 4, 5, 0.48));
+    radial-gradient(circle at 50% 48%, rgba(216, 194, 162, 0.06), transparent 30%),
+    linear-gradient(180deg, rgba(3, 4, 5, 0.14), rgba(3, 4, 5, 0.08) 48%, rgba(3, 4, 5, 0.34));
 }
 
 .contact-bg::before {
