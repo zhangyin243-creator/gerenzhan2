@@ -243,7 +243,6 @@ function Hero() {
         playsInline
         aria-hidden="true"
       />
-      <div className="hero-motion-layer" aria-hidden="true" />
       <div className="hero-inner page-shell">
         <div className="hero-kicker">Zhang Ying Portfolio</div>
         <h1>
@@ -513,7 +512,7 @@ function usePortfolioMotion() {
   React.useLayoutEffect(() => {
     const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     const heroTargets =
-      ".nav, .hero-video, .hero-motion-layer, .hero-kicker, .hero-title-main, .hero-title-sub, .hero p, .hero-actions";
+      ".nav, .hero-video, .hero-kicker, .hero-title-main, .hero-title-sub, .hero p, .hero-actions";
     const hasTargets = (target) => {
       if (!target) return false;
       if (typeof target === "string") return Boolean(document.querySelector(target));
@@ -551,7 +550,6 @@ function usePortfolioMotion() {
 
       safeSet(".nav", { y: -72, autoAlpha: 0 });
       safeSet(".hero-video", { scale: 1.16, autoAlpha: 0.42 });
-      safeSet(".hero-motion-layer", { autoAlpha: 0 });
       safeSet(".hero-kicker", { y: 28, autoAlpha: 0, clipPath: "inset(0 0 100% 0)" });
       safeSet(".hero-title-main, .hero-title-sub", {
         yPercent: 118,
@@ -571,7 +569,6 @@ function usePortfolioMotion() {
           },
         })
         .to(".hero-video", { scale: 1.03, autoAlpha: 1, duration: 1.9 }, 0)
-        .to(".hero-motion-layer", { autoAlpha: 1, duration: 1.4 }, 0.1)
         .to(".nav", { y: 0, autoAlpha: 1, duration: 1.05 }, 0.18)
         .to(
           ".hero-kicker",
