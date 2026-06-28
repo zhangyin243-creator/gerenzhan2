@@ -512,33 +512,63 @@ function ContactFinale() {
 function usePortfolioMotion() {
   React.useLayoutEffect(() => {
     const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const heroTargets =
+      ".nav, .hero-video, .hero-motion-layer, .hero-kicker, .hero-title-main, .hero-title-sub, .hero p, .hero-actions";
+    const hasTargets = (target) => {
+      if (!target) return false;
+      if (typeof target === "string") return Boolean(document.querySelector(target));
+      if (typeof target.length === "number") return target.length > 0;
+      return true;
+    };
+    const safeSet = (target, vars) => {
+      if (hasTargets(target)) gsap.set(target, vars);
+    };
+
+    const revealHeroFallback = () => {
+      window.__portfolioHeroOpened = true;
+      gsap.killTweensOf(heroTargets);
+      gsap.set(heroTargets, {
+        autoAlpha: 1,
+        clipPath: "inset(0 0 0% 0)",
+        clearProps: "transform,opacity,visibility,clipPath",
+      });
+      ScrollTrigger.refresh();
+    };
 
     if (reduceMotion) {
       document.documentElement.classList.add("motion-reduced");
+      revealHeroFallback();
       return () => document.documentElement.classList.remove("motion-reduced");
     }
+
+    const fallbackId = window.setTimeout(() => {
+      if (!window.__portfolioHeroOpened) revealHeroFallback();
+    }, 2600);
 
     const ctx = gsap.context(() => {
       const slowEase = "power4.out";
       const revealEase = "expo.out";
 
-      gsap.set(".nav", { y: -72, autoAlpha: 0 });
-      gsap.set(".hero-video", { scale: 1.16, autoAlpha: 0.42 });
-      gsap.set(".hero-motion-layer", { autoAlpha: 0 });
-      gsap.set(".hero-kicker", { y: 28, autoAlpha: 0, clipPath: "inset(0 0 100% 0)" });
-      gsap.set(".hero-title-main, .hero-title-sub", {
+      safeSet(".nav", { y: -72, autoAlpha: 0 });
+      safeSet(".hero-video", { scale: 1.16, autoAlpha: 0.42 });
+      safeSet(".hero-motion-layer", { autoAlpha: 0 });
+      safeSet(".hero-kicker", { y: 28, autoAlpha: 0, clipPath: "inset(0 0 100% 0)" });
+      safeSet(".hero-title-main, .hero-title-sub", {
         yPercent: 118,
         scaleY: 0.58,
         autoAlpha: 0,
         clipPath: "inset(0 0 100% 0)",
         transformOrigin: "50% 100%",
       });
-      gsap.set(".hero p, .hero-actions", { y: 34, autoAlpha: 0 });
+      safeSet(".hero p, .hero-actions", { y: 34, autoAlpha: 0 });
 
       gsap
         .timeline({
           defaults: { ease: slowEase },
-          onComplete: () => ScrollTrigger.refresh(),
+          onComplete: () => {
+            window.__portfolioHeroOpened = true;
+            ScrollTrigger.refresh();
+          },
         })
         .to(".hero-video", { scale: 1.03, autoAlpha: 1, duration: 1.9 }, 0)
         .to(".hero-motion-layer", { autoAlpha: 1, duration: 1.4 }, 0.1)
@@ -583,15 +613,15 @@ function usePortfolioMotion() {
           ".profile-grid > .profile-glow, .project-grid > .project-glow, .strength-grid > .strength-glow",
         );
 
-        gsap.set(eyebrow, { y: 42, autoAlpha: 0, clipPath: "inset(0 0 100% 0)" });
-        gsap.set(title, {
+        safeSet(eyebrow, { y: 42, autoAlpha: 0, clipPath: "inset(0 0 100% 0)" });
+        safeSet(title, {
           yPercent: 128,
           scaleY: 0.66,
           autoAlpha: 0,
           clipPath: "inset(0 0 100% 0)",
           transformOrigin: "50% 100%",
         });
-        gsap.set(cards, {
+        safeSet(cards, {
           y: 120,
           rotationX: 8,
           autoAlpha: 0,
@@ -726,7 +756,9 @@ function usePortfolioMotion() {
     });
 
     return () => {
+      window.clearTimeout(fallbackId);
       ctx.revert();
+      delete window.__portfolioHeroOpened;
       delete window.__portfolioMotion;
     };
   }, []);
@@ -761,4 +793,7 @@ function App() {
   );
 }
 
-createRoot(document.getElementById("root")).render(<App />);
+const rootElement = document.getElementById("root");
+const root = window.__portfolioReactRoot || createRoot(rootElement);
+window.__portfolioReactRoot = root;
+root.render(<App />);
