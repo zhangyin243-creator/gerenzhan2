@@ -13,7 +13,6 @@ import {
   GraduationCap,
   ImageSquare,
   Lightning,
-  Phone,
   Sparkle,
 } from "@phosphor-icons/react";
 import BorderGlow from "./BorderGlow";
@@ -22,11 +21,8 @@ import "./styles.css";
 gsap.registerPlugin(ScrollTrigger);
 
 const contact = {
-  phone: "15320612087",
   email: "zhangyin243@gmail.com",
 };
-
-const maskedPhone = contact.phone.replace(/(\d{3})\d{4}(\d+)/, "$1****$2");
 
 const stats = [
   { value: "CET-6", label: "英语能力" },
@@ -62,10 +58,26 @@ const projects = [
   {
     title: "AI视觉方向研究",
     type: "Generative Visual",
-    image: "/media/ai-visual/ai-visual-board.webp",
+    image: "/media/ai-visual/ai-visual-research-board.png",
     width: 1672,
     height: 941,
     copy: "用生成式AI辅助图像创意、提示词优化、素材迭代和视觉方案输出。",
+  },
+  {
+    title: "AI设计",
+    type: "AI Design",
+    image: "/media/ai-design/ai-design-board.png",
+    width: 1672,
+    height: 941,
+    copy: "围绕AI辅助设计流程，展示从需求分析、概念探索、提示词优化到方案呈现的完整工作流。",
+  },
+  {
+    title: "品牌设计",
+    type: "Brand Design",
+    image: "/media/brand-design/brand-design-board.png",
+    width: 1672,
+    height: 941,
+    copy: "以品牌策略、视觉统一和全触点传播为核心，梳理品牌系统、包装应用与社交媒体视觉。",
   },
   {
     title: "Solana生态内容支持",
@@ -86,12 +98,25 @@ const projects = [
   {
     title: "跨境商品信息呈现",
     type: "Commerce Layout",
-    image: "/media/commerce-layout/commerce-layout-board.webp",
-    width: 1535,
-    height: 1024,
+    image: "/media/commerce-layout/commerce-layout-board-new.png",
+    width: 1672,
+    height: 941,
     copy: "结合英语与商务英语背景，处理产品信息、英文资料和上架内容表达。",
   },
 ];
+
+const projectOrder = [
+  "/media/ai-visual/ai-visual-research-board.png",
+  "/media/ai-design/ai-design-board.png",
+  "/media/brand-design/brand-design-board.png",
+  "/media/commerce-layout/commerce-layout-board-new.png",
+  "/media/brand-system/brand-social-board.webp",
+  "/portfolio-assets/project-solana.webp",
+];
+
+const orderedProjects = projectOrder
+  .map((image) => projects.find((project) => project.image === image))
+  .filter(Boolean);
 
 const strengths = [
   {
@@ -125,9 +150,6 @@ const strengths = [
     icon: CirclesThreePlus,
   },
 ];
-
-const organicVideo =
-  "https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260619_191346_9d19d66e-86a4-47f7-8dc6-712c1788c3b2.mp4";
 
 function DeferredVideo({ src, eager = false, rootMargin = "900px", autoPlay, preloadMode = "metadata", ...props }) {
   const videoRef = React.useRef(null);
@@ -213,7 +235,7 @@ function Nav() {
     <nav className="nav" aria-label="主导航">
       <a className="nav-brand" href="#top" aria-label="返回首页">
         <span>ZY</span>
-        <strong>ZHANG YING</strong>
+        <strong>ZHANGYING</strong>
       </a>
       <div className="nav-links">
         <a href="#profile">经历</a>
@@ -232,102 +254,69 @@ function Nav() {
 function Hero() {
   return (
     <section id="top" className="hero">
-      <DeferredVideo
-        className="hero-video"
-        src="/portfolio-assets/hero-loop.mp4"
-        eager
-        autoPlay
-        muted
-        loop
-        playsInline
-        aria-hidden="true"
-      />
-      <div className="hero-inner page-shell">
-        <div className="hero-kicker">Zhang Ying Portfolio</div>
-        <h1>
-          <span className="hero-title-main">Visual Designer</span>
-          <span className="hero-title-sub">&amp; AI Brand Designer</span>
-        </h1>
-        <p>
-          视觉设计师、AI设计师、品牌设计师。以英语背景、AI工具和品牌意识，将复杂信息转译为克制、清晰、有质感的视觉表达。
-        </p>
-        <div className="hero-actions">
-          <a className="primary-button" href={`mailto:${contact.email}`}>
-            联系我
-            <ArrowUpRight size={18} weight="bold" />
-          </a>
-          <a className="text-link" href="#projects">
-            查看精选项目
-          </a>
+      <div className="hero-frame">
+        <DeferredVideo
+          className="hero-video"
+          src="/portfolio-assets/rivr-hero-loop.mp4"
+          eager
+          autoPlay
+          muted
+          loop
+          playsInline
+          aria-hidden="true"
+        />
+        <div className="hero-scrim" aria-hidden="true" />
+        <div className="opening-wipe" aria-hidden="true" />
+        <div className="hero-inner">
+          <div className="hero-kicker">ZHANGYING Portfolio</div>
+          <h1>
+            <span className="hero-title-main">Visual Designer</span>
+            <span className="hero-title-sub">&amp; AI Brand Designer</span>
+          </h1>
+          <p>
+            视觉设计师、AI设计师、品牌设计师。以英语背景、AI工具和品牌意识，将复杂信息转译为克制、清晰、有质感的视觉表达。
+          </p>
+          <div className="hero-actions">
+            <a className="primary-button" href="#projects">
+              查看精选项目
+              <ArrowUpRight size={18} weight="bold" />
+            </a>
+            <a className="text-link" href="#profile">
+              了解经历
+            </a>
+          </div>
         </div>
+        <a className="hero-contact-corner" href={`mailto:${contact.email}`} aria-label={`联系我 ${contact.email}`}>
+          <span className="hero-corner-mask hero-corner-mask-top" aria-hidden="true" />
+          <span className="hero-corner-mask hero-corner-mask-left" aria-hidden="true" />
+          <span className="hero-contact-icon" aria-hidden="true">
+            <ArrowUpRight size={24} weight="bold" />
+          </span>
+          <span className="hero-contact-copy">
+            <strong>联系我</strong>
+            <span>{contact.email}</span>
+          </span>
+        </a>
       </div>
     </section>
   );
 }
 
 function ZyVisual() {
-  const orbitPath =
-    "M 201 1022 C 96 781 188 488 407 280 C 631 68 869 136 922 419 C 972 683 851 945 620 1105 C 415 1247 261 1157 201 1022 Z";
-
   return (
     <BorderGlow className="profile-glow profile-glow-visual" animated>
       <div className="profile-visual-panel zy-visual-panel" aria-label="ZY brand visual">
         <DeferredImage
-          className="zy-visual-bg"
-          src="/portfolio-assets/zy-bg.webp"
+          className="zy-profile-scene"
+          src="/portfolio-assets/profile-scene.png"
           rootMargin="1100px"
-          width="1086"
-          height="1448"
+          width="1200"
+          height="1978"
           loading="lazy"
           decoding="async"
           alt=""
           aria-hidden="true"
         />
-        <DeferredImage
-          className="zy-flower-layer"
-          src="/portfolio-assets/zy-flower.webp"
-          rootMargin="1100px"
-          width="1086"
-          height="1448"
-          loading="lazy"
-          decoding="async"
-          alt=""
-          aria-hidden="true"
-        />
-        <div className="zy-petal-shimmer" aria-hidden="true" />
-        <svg className="zy-orbit-svg" viewBox="0 0 1086 1448" aria-hidden="true">
-          <defs>
-            <path id="zyOrbitPath" d={orbitPath} />
-            <filter id="zyParticleGlow" x="-80%" y="-80%" width="260%" height="260%">
-              <feGaussianBlur stdDeviation="9" result="blur" />
-              <feMerge>
-                <feMergeNode in="blur" />
-                <feMergeNode in="SourceGraphic" />
-              </feMerge>
-            </filter>
-          </defs>
-          <use className="zy-orbit-line" href="#zyOrbitPath" />
-          <use className="zy-orbit-flow" href="#zyOrbitPath" />
-          <circle className="zy-orbit-particle is-main" r="9" filter="url(#zyParticleGlow)">
-            <animateMotion dur="19s" repeatCount="indefinite" rotate="auto">
-              <mpath href="#zyOrbitPath" />
-            </animateMotion>
-          </circle>
-          <circle className="zy-orbit-particle is-soft" r="6" filter="url(#zyParticleGlow)">
-            <animateMotion dur="25s" begin="-8s" repeatCount="indefinite" rotate="auto">
-              <mpath href="#zyOrbitPath" />
-            </animateMotion>
-          </circle>
-          <circle className="zy-orbit-particle is-faint" r="4" filter="url(#zyParticleGlow)">
-            <animateMotion dur="34s" begin="-17s" repeatCount="indefinite" rotate="auto">
-              <mpath href="#zyOrbitPath" />
-            </animateMotion>
-          </circle>
-        </svg>
-        <div className="zy-visual-caption">
-          <span>Available for</span>
-          <strong>Visual / AI / Brand Design</strong>
-        </div>
       </div>
     </BorderGlow>
   );
@@ -346,7 +335,7 @@ function Profile() {
       </div>
       <div className="profile-grid">
         <ZyVisual />
-        <div className="profile-visual-panel" aria-label="张颖个人品牌视觉">
+        <div className="profile-visual-panel" aria-label="ZHANGYING个人品牌视觉">
           <div className="profile-visual-orbit" aria-hidden="true">
             <span />
             <span />
@@ -355,24 +344,16 @@ function Profile() {
           <div className="profile-visual-core" aria-hidden="true">
             <strong>ZY</strong>
           </div>
-          <div className="profile-visual-caption">
-            <span>Available for</span>
-            <strong>Visual / AI / Brand Design</strong>
-          </div>
         </div>
         <BorderGlow className="profile-glow profile-glow-copy">
           <div className="profile-copy">
             <p>
-              我是张颖，应届毕业生，本科英语专业，专科商务英语专业。我的目标方向聚焦视觉设计、AI设计、品牌设计，同时具备跨境电商、英文资料处理和区块链内容支持的学习与实践基础。
+              我是ZHANGYING，应届毕业生，本科英语专业，专科商务英语专业。我的目标方向聚焦视觉设计、AI设计、品牌设计，同时具备跨境电商、英文资料处理和区块链内容支持的学习与实践基础。
             </p>
             <p>
               我能使用办公软件完成归档、表格和汇报材料，也能用AI工具辅助英文写作、资料归纳、文案优化、提示词迭代和视觉素材构思。对我来说，设计不只是画面，更是信息的筛选、排序和表达，让内容更清晰、更准确，也更具传播力。
             </p>
             <div className="contact-strip" aria-label="联系方式">
-              <a href={`tel:${contact.phone}`}>
-                <Phone size={18} weight="bold" />
-                {maskedPhone}
-              </a>
               <a href={`mailto:${contact.email}`}>
                 <EnvelopeSimple size={18} weight="bold" />
                 {contact.email}
@@ -410,6 +391,33 @@ function Profile() {
 }
 
 function Projects() {
+  const [activeIndex, setActiveIndex] = React.useState(0);
+  const galleryRef = React.useRef(null);
+  const activeProject = orderedProjects[activeIndex];
+
+  const handleGalleryPointerMove = React.useCallback((event) => {
+    const gallery = galleryRef.current;
+    if (
+      !gallery ||
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches ||
+      !window.matchMedia("(hover: hover) and (pointer: fine)").matches
+    ) return;
+
+    const rect = gallery.getBoundingClientRect();
+    const x = ((event.clientX - rect.left) / rect.width - 0.5).toFixed(3);
+    const y = ((event.clientY - rect.top) / rect.height - 0.5).toFixed(3);
+
+    gallery.style.setProperty("--project-x", x);
+    gallery.style.setProperty("--project-y", y);
+  }, []);
+
+  const resetGalleryPointer = React.useCallback(() => {
+    const gallery = galleryRef.current;
+    if (!gallery) return;
+    gallery.style.setProperty("--project-x", "0");
+    gallery.style.setProperty("--project-y", "0");
+  }, []);
+
   return (
     <section id="projects" className="projects section page-shell">
       <div className="section-heading compact">
@@ -420,8 +428,79 @@ function Projects() {
           <span className="heading-line">持续沉淀为可落地的完整作品。</span>
         </h2>
       </div>
+      <div
+        className="project-gallery"
+        ref={galleryRef}
+        onPointerMove={handleGalleryPointerMove}
+        onPointerLeave={resetGalleryPointer}
+      >
+        <div className="project-gallery-panel">
+          <span className="project-gallery-kicker">Project Index</span>
+          <div className="project-gallery-list" role="list" aria-label="Selected project list">
+            {orderedProjects.map((project, index) => (
+              <button
+                className={`project-gallery-item${index === activeIndex ? " is-active" : ""}`}
+                type="button"
+                key={project.title}
+                onMouseEnter={() => setActiveIndex(index)}
+                onFocus={() => setActiveIndex(index)}
+                onClick={() => setActiveIndex(index)}
+                aria-pressed={index === activeIndex}
+              >
+                <span>{String(index + 1).padStart(2, "0")}</span>
+                <strong>{project.title}</strong>
+                <em>{project.type}</em>
+              </button>
+            ))}
+          </div>
+        </div>
+
+        <div className="project-stage" aria-live="polite">
+          <div className="project-stage-bg" aria-hidden="true" />
+          <div className="project-stack" aria-hidden="true">
+            {orderedProjects.map((project, index) => {
+              const stackIndex = index;
+              const stackDepth = orderedProjects.length - index;
+              return (
+                <span
+                  className={`project-stack-card${index === activeIndex ? " is-current" : ""}`}
+                  style={{ "--stack-index": stackIndex, "--stack-depth": stackDepth }}
+                  key={project.title}
+                >
+                  <img src={project.image} alt="" loading="lazy" decoding="async" />
+                </span>
+              );
+            })}
+          </div>
+          <article className="project-stage-card">
+            <div className="project-stage-media" style={{ aspectRatio: `${activeProject.width} / ${activeProject.height}` }}>
+              <DeferredImage
+                key={activeProject.image}
+                className="project-stage-image"
+                src={activeProject.image}
+                rootMargin="560px"
+                width={activeProject.width}
+                height={activeProject.height}
+                loading="lazy"
+                decoding="async"
+                alt={`${activeProject.title} project visual`}
+              />
+            </div>
+            <div className="project-stage-copy">
+              <span>{String(activeIndex + 1).padStart(2, "0")} / {String(orderedProjects.length).padStart(2, "0")}</span>
+              <h3>{activeProject.title}</h3>
+              <p>{activeProject.copy}</p>
+              <div className="project-stage-tags" aria-label="Project tags">
+                <small>{activeProject.type}</small>
+                <small>Visual Direction</small>
+                <small>Portfolio Work</small>
+              </div>
+            </div>
+          </article>
+        </div>
+      </div>
       <div className="project-grid">
-        {projects.map((project, index) => (
+        {orderedProjects.map((project, index) => (
           <BorderGlow
             className={`project-glow project-glow-${index + 1}`}
             key={project.title}
@@ -478,30 +557,62 @@ function Strengths() {
 }
 
 function ContactFinale() {
+  const contactRef = React.useRef(null);
+
+  const handlePointerMove = React.useCallback((event) => {
+    const section = contactRef.current;
+    if (!section || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+    const rect = section.getBoundingClientRect();
+    const x = ((event.clientX - rect.left) / rect.width - 0.5).toFixed(3);
+    const y = ((event.clientY - rect.top) / rect.height - 0.5).toFixed(3);
+
+    section.style.setProperty("--contact-x", x);
+    section.style.setProperty("--contact-y", y);
+  }, []);
+
+  const handlePointerLeave = React.useCallback(() => {
+    const section = contactRef.current;
+    if (!section) return;
+    section.style.setProperty("--contact-x", "0");
+    section.style.setProperty("--contact-y", "0");
+  }, []);
+
   return (
-    <section id="contact" className="contact-finale">
-      <DeferredVideo
-        className="contact-video"
-        src={organicVideo}
-        rootMargin="2200px"
-        preloadMode="auto"
-        autoPlay
-        muted
-        loop
-        playsInline
-        aria-hidden="true"
-      />
-      <div className="contact-bg" aria-hidden="true" />
+    <section
+      id="contact"
+      className="contact-finale"
+      ref={contactRef}
+      onPointerMove={handlePointerMove}
+      onPointerLeave={handlePointerLeave}
+    >
+      <div className="contact-scene-layer" aria-hidden="true">
+        <DeferredVideo
+          className="contact-scene-video"
+          src="/portfolio-assets/rivr-hero-loop.mp4"
+          rootMargin="1800px"
+          preloadMode="auto"
+          autoPlay
+          muted
+          loop
+          playsInline
+        />
+        <div className="contact-cinematic-scrim" />
+      </div>
       <div className="page-shell contact-inner">
-        <span>Contact</span>
-        <div className="contact-actions">
-          <a className="primary-button" href={`mailto:${contact.email}`}>
+        <a className="contact-badge" href={`mailto:${contact.email}`}>
+          Contact by email
+          <span aria-hidden="true">{"->"}</span>
+        </a>
+        <h2>
+          <a className="contact-email-link" href={`mailto:${contact.email}`} aria-label={`Send email to ${contact.email}`}>
             {contact.email}
-            <ArrowUpRight size={18} weight="bold" />
           </a>
-          <a className="secondary-button" href={`tel:${contact.phone}`}>
-            {maskedPhone}
-            <Phone size={18} weight="bold" />
+        </h2>
+        <div className="contact-actions">
+          <a className="primary-button" href={`mailto:${contact.email}`} aria-label={`Send email to ${contact.email}`}>
+            Send email
+            <span aria-hidden="true">{"->"}</span>
           </a>
         </div>
       </div>
@@ -513,7 +624,7 @@ function usePortfolioMotion() {
   React.useLayoutEffect(() => {
     const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     const heroTargets =
-      ".nav, .hero-video, .hero-kicker, .hero-title-main, .hero-title-sub, .hero p, .hero-actions";
+      ".nav, .hero-frame, .hero-video, .hero-scrim, .opening-wipe, .hero-kicker, .hero-title-main, .hero-title-sub, .hero p, .hero-actions, .hero-contact-corner";
     const hasTargets = (target) => {
       if (!target) return false;
       if (typeof target === "string") return Boolean(document.querySelector(target));
@@ -532,6 +643,7 @@ function usePortfolioMotion() {
         clipPath: "inset(0 0 0% 0)",
         clearProps: "transform,opacity,visibility,clipPath",
       });
+      gsap.set(".opening-wipe", { autoAlpha: 0 });
       ScrollTrigger.refresh();
     };
 
@@ -543,23 +655,28 @@ function usePortfolioMotion() {
 
     const fallbackId = window.setTimeout(() => {
       if (!window.__portfolioHeroOpened) revealHeroFallback();
-    }, 2600);
+    }, 3600);
 
     const ctx = gsap.context(() => {
       const slowEase = "power4.out";
       const revealEase = "expo.out";
+      const openingEase = "power4.inOut";
 
       safeSet(".nav", { y: -72, autoAlpha: 0 });
-      safeSet(".hero-video", { scale: 1.16, autoAlpha: 0.42 });
-      safeSet(".hero-kicker", { y: 28, autoAlpha: 0, clipPath: "inset(0 0 100% 0)" });
+      safeSet(".hero-frame", { scale: 0.985, clipPath: "inset(4% 4% 4% 4% round 36px)" });
+      safeSet(".hero-video", { scale: 1.22, autoAlpha: 0.48 });
+      safeSet(".hero-scrim", { autoAlpha: 0.9 });
+      safeSet(".opening-wipe", { autoAlpha: 1, clipPath: "inset(0% 0% 0% 0%)", scaleY: 1 });
+      safeSet(".hero-kicker", { y: 42, autoAlpha: 0, clipPath: "inset(0 0 100% 0)" });
       safeSet(".hero-title-main, .hero-title-sub", {
-        yPercent: 118,
-        scaleY: 0.58,
+        yPercent: 126,
+        scaleY: 0.46,
         autoAlpha: 0,
         clipPath: "inset(0 0 100% 0)",
         transformOrigin: "50% 100%",
       });
-      safeSet(".hero p, .hero-actions", { y: 34, autoAlpha: 0 });
+      safeSet(".hero p, .hero-actions", { y: 54, autoAlpha: 0 });
+      safeSet(".hero-contact-corner", { y: 42, autoAlpha: 0, scale: 0.96 });
 
       gsap
         .timeline({
@@ -569,12 +686,15 @@ function usePortfolioMotion() {
             ScrollTrigger.refresh();
           },
         })
-        .to(".hero-video", { scale: 1.03, autoAlpha: 1, duration: 1.9 }, 0)
-        .to(".nav", { y: 0, autoAlpha: 1, duration: 1.05 }, 0.18)
+        .to(".opening-wipe", { clipPath: "inset(0% 0% 100% 0%)", duration: 1.28, ease: openingEase }, 0.05)
+        .set(".opening-wipe", { autoAlpha: 0 }, 1.36)
+        .to(".hero-frame", { scale: 1, clipPath: "inset(0% 0% 0% 0% round 52px)", duration: 1.65, ease: openingEase }, 0)
+        .to(".hero-video", { scale: 1.02, autoAlpha: 1, duration: 2.25, ease: slowEase }, 0)
+        .to(".nav", { y: 0, autoAlpha: 1, duration: 1.18 }, 0.42)
         .to(
           ".hero-kicker",
-          { y: 0, autoAlpha: 1, clipPath: "inset(0 0 0% 0)", duration: 0.9 },
-          0.42,
+          { y: 0, autoAlpha: 1, clipPath: "inset(0 0 0% 0)", duration: 1.08 },
+          0.7,
         )
         .to(
           ".hero-title-main",
@@ -583,10 +703,10 @@ function usePortfolioMotion() {
             scaleY: 1,
             autoAlpha: 1,
             clipPath: "inset(0 0 0% 0)",
-            duration: 1.35,
+            duration: 1.55,
             ease: revealEase,
           },
-          0.62,
+          0.88,
         )
         .to(
           ".hero-title-sub",
@@ -595,93 +715,128 @@ function usePortfolioMotion() {
             scaleY: 1,
             autoAlpha: 1,
             clipPath: "inset(0 0 0% 0)",
-            duration: 1.45,
+            duration: 1.68,
             ease: revealEase,
           },
-          0.82,
+          1.04,
         )
-        .to(".hero p", { y: 0, autoAlpha: 1, duration: 1.0 }, 1.35)
-        .to(".hero-actions", { y: 0, autoAlpha: 1, duration: 0.95 }, 1.52);
+        .to(".hero p", { y: 0, autoAlpha: 1, duration: 1.15 }, 1.62)
+        .to(".hero-actions", { y: 0, autoAlpha: 1, duration: 1.08 }, 1.78)
+        .to(".hero-contact-corner", { y: 0, scale: 1, autoAlpha: 1, duration: 1.0 }, 1.92);
 
       gsap.utils.toArray(".section").forEach((section) => {
         const eyebrow = section.querySelector(".section-heading > span");
         const titleTargets = section.querySelectorAll(".section-heading .heading-line");
         const title = titleTargets.length ? titleTargets : section.querySelectorAll(".section-heading h2");
         const cards = section.querySelectorAll(
-          ".profile-grid > .profile-glow, .project-grid > .project-glow, .strength-grid > .strength-glow",
+          ".profile-grid > .profile-glow, .profile-visual-panel, .stats-panel, .project-gallery-panel, .project-stage-card, .project-stack-card, .strength-grid > .strength-glow",
+        );
+        const images = section.querySelectorAll(
+          ".section-motion-image",
         );
 
-        safeSet(eyebrow, { y: 42, autoAlpha: 0, clipPath: "inset(0 0 100% 0)" });
+        safeSet(eyebrow, {
+          x: -84,
+          y: 132,
+          scaleX: 1.34,
+          scaleY: 0.72,
+          autoAlpha: 0,
+          clipPath: "inset(0 0 100% 0)",
+          transformOrigin: "0% 100%",
+        });
         safeSet(title, {
-          yPercent: 128,
-          scaleY: 0.66,
+          yPercent: 112,
+          scaleY: 0.56,
           autoAlpha: 0,
           clipPath: "inset(0 0 100% 0)",
           transformOrigin: "50% 100%",
         });
         safeSet(cards, {
-          y: 120,
-          rotationX: 8,
+          y: 118,
+          scale: 0.965,
+          rotationX: 9,
           autoAlpha: 0,
           clipPath: "inset(18% 0 0 0)",
           transformOrigin: "50% 100%",
         });
+        safeSet(images, {
+          yPercent: 8,
+          scale: 1.055,
+          clipPath: "inset(0 0 100% 0)",
+          transformOrigin: "50% 50%",
+        });
 
-        gsap
-          .timeline({
-            scrollTrigger: {
-              trigger: section,
-              start: "top 72%",
-              once: true,
-            },
-            defaults: { ease: slowEase },
-          })
-          .to(eyebrow, { y: 0, autoAlpha: 1, clipPath: "inset(0 0 0% 0)", duration: 0.72 })
-          .to(
+        const sectionTimeline = gsap.timeline({
+          scrollTrigger: {
+            trigger: section,
+            start: "top 76%",
+            once: true,
+          },
+          defaults: { ease: slowEase },
+        });
+
+        if (hasTargets(eyebrow)) {
+          sectionTimeline.to(eyebrow, {
+            x: 0,
+            y: 0,
+            scaleX: 1,
+            scaleY: 1,
+            autoAlpha: 1,
+            clipPath: "inset(0 0 0% 0)",
+            duration: 1.28,
+            ease: revealEase,
+          });
+        }
+
+        if (hasTargets(title)) {
+          sectionTimeline.to(
             title,
             {
               yPercent: 0,
               scaleY: 1,
               autoAlpha: 1,
               clipPath: "inset(0 0 0% 0)",
-              duration: 1.15,
-              stagger: 0.08,
+              duration: 1.48,
+              stagger: 0.1,
               ease: revealEase,
             },
-            "-=0.24",
-          )
-          .to(
+            "-=0.32",
+          );
+        }
+
+        if (hasTargets(cards)) {
+          sectionTimeline.to(
             cards,
             {
               y: 0,
+              scale: 1,
               rotationX: 0,
               autoAlpha: 1,
               clipPath: "inset(0% 0 0 0)",
-              duration: 1.15,
-              stagger: { each: 0.13, from: "start" },
+              duration: 1.26,
+              stagger: { each: 0.12, from: "start" },
             },
-            "-=0.42",
+            "-=1.08",
           );
+        }
+
+        if (hasTargets(images)) {
+          sectionTimeline.to(
+            images,
+            {
+              yPercent: 0,
+              scale: 1,
+              clipPath: "inset(0 0 0% 0)",
+              duration: 1.55,
+              stagger: 0.08,
+              ease: revealEase,
+            },
+            "-=1.24",
+          );
+        }
       });
 
       gsap.utils.toArray(".project-card > img").forEach((image) => {
-        gsap.fromTo(
-          image,
-          { clipPath: "inset(0 0 100% 0)", scale: 1.08, yPercent: -5 },
-          {
-            clipPath: "inset(0 0 0% 0)",
-            scale: 1.02,
-            yPercent: 0,
-            duration: 1.25,
-            ease: revealEase,
-            scrollTrigger: {
-              trigger: image,
-              start: "top 82%",
-              once: true,
-            },
-          },
-        );
-
         gsap.to(image, {
           yPercent: 5,
           ease: "none",
@@ -689,52 +844,95 @@ function usePortfolioMotion() {
             trigger: image.closest(".project-glow") || image,
             start: "top bottom",
             end: "bottom top",
-            scrub: 0.8,
+            scrub: 1.15,
           },
         });
       });
 
-      gsap.to(".zy-visual-bg", {
-        yPercent: 6,
-        scale: 1.06,
-        ease: "none",
-        scrollTrigger: {
-          trigger: ".profile-glow-visual",
-          start: "top bottom",
-          end: "bottom top",
-          scrub: 0.9,
-        },
-      });
-
-      gsap.to(".zy-flower-layer", {
-        yPercent: -5,
-        scale: 1.05,
-        ease: "none",
-        scrollTrigger: {
-          trigger: ".profile-glow-visual",
-          start: "top bottom",
-          end: "bottom top",
-          scrub: 0.9,
-        },
-      });
-
       gsap.fromTo(
-        ".contact-inner > span, .contact-actions",
-        { y: 72, autoAlpha: 0, clipPath: "inset(24% 0 0 0)" },
+        ".project-stage-image",
+        { yPercent: -4, scale: 1.04 },
         {
-          y: 0,
-          autoAlpha: 1,
-          clipPath: "inset(0% 0 0 0)",
-          duration: 1.25,
-          stagger: 0.16,
-          ease: revealEase,
+          yPercent: 4,
+          scale: 1.08,
+          ease: "none",
           scrollTrigger: {
-            trigger: ".contact-finale",
-            start: "top 70%",
-            once: true,
+            trigger: ".project-stage",
+            start: "top bottom",
+            end: "bottom top",
+            scrub: 1.1,
           },
         },
       );
+
+      safeSet(".contact-scene-video", { scale: 1.18, autoAlpha: 0.72, clipPath: "inset(8% 6% 8% 6% round 34px)" });
+      safeSet(".contact-cinematic-scrim", { autoAlpha: 0.96 });
+      safeSet(".contact-badge", {
+        y: 62,
+        scaleY: 0.7,
+        autoAlpha: 0,
+        clipPath: "inset(0 0 100% 0)",
+        transformOrigin: "50% 100%",
+      });
+      safeSet(".contact-inner h2", {
+        yPercent: 92,
+        scaleY: 0.48,
+        autoAlpha: 0,
+        clipPath: "inset(0 0 100% 0)",
+        transformOrigin: "50% 100%",
+      });
+      safeSet(".contact-actions", { y: 54, autoAlpha: 0, clipPath: "inset(0 0 100% 0)" });
+
+      gsap
+        .timeline({
+          scrollTrigger: {
+            trigger: ".contact-finale",
+            start: "top 78%",
+            once: true,
+          },
+          defaults: { ease: slowEase },
+        })
+        .to(".contact-scene-video", {
+          scale: 1.02,
+          autoAlpha: 1,
+          clipPath: "inset(0% 0% 0% 0% round 0px)",
+          duration: 1.9,
+          ease: openingEase,
+        }, 0)
+        .to(".contact-cinematic-scrim", { autoAlpha: 1, duration: 1.2 }, 0.12)
+        .to(".contact-badge", {
+          y: 0,
+          scaleY: 1,
+          autoAlpha: 1,
+          clipPath: "inset(0 0 0% 0)",
+          duration: 0.96,
+        }, 0.48)
+        .to(".contact-inner h2", {
+          yPercent: 0,
+          scaleY: 1,
+          autoAlpha: 1,
+          clipPath: "inset(0 0 0% 0)",
+          duration: 1.45,
+          ease: revealEase,
+        }, 0.64)
+        .to(".contact-actions", {
+          y: 0,
+          autoAlpha: 1,
+          clipPath: "inset(0 0 0% 0)",
+          duration: 1.05,
+        }, 1.06);
+
+      gsap.to(".contact-scene-video", {
+        yPercent: 5,
+        scale: 1.08,
+        ease: "none",
+        scrollTrigger: {
+          trigger: ".contact-finale",
+          start: "top bottom",
+          end: "bottom top",
+          scrub: 1.15,
+        },
+      });
 
       window.__portfolioMotion = {
         triggerCount: ScrollTrigger.getAll().length,

@@ -109,15 +109,15 @@ function BorderGlow({
   children,
   className = "",
   edgeSensitivity = 30,
-  glowColor = "40 80 80",
-  backgroundColor = "#07090a",
+  glowColor = "215 34 72",
+  backgroundColor = "rgba(255, 255, 255, 0.52)",
   borderRadius = 8,
   glowRadius = 34,
   glowIntensity = 0.95,
   coneSpread = 24,
   animated = false,
-  colors = ["#d8c2a2", "#84d6c2", "#f1dfc5"],
-  fillOpacity = 0.28,
+  colors = ["rgba(91, 112, 144, 0.28)", "rgba(199, 214, 230, 0.34)", "rgba(255, 255, 255, 0.58)"],
+  fillOpacity = 0.18,
 }) {
   const cardRef = useRef(null);
   const pointerRef = useRef(null);
