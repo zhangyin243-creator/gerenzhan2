@@ -160,9 +160,8 @@ function DeferredVideo({ src, eager = false, rootMargin = "900px", autoPlay, pre
     if (!video) return undefined;
 
     if (eager) {
-      const load = () => setVideoSrc(src);
-      const timeoutId = window.setTimeout(load, 450);
-      return () => window.clearTimeout(timeoutId);
+      setVideoSrc(src);
+      return undefined;
     }
 
     if (!("IntersectionObserver" in window)) {
