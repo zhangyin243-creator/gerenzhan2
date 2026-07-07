@@ -257,7 +257,6 @@ function Hero() {
         <DeferredVideo
           className="hero-video"
           src="/portfolio-assets/rivr-hero-loop-optimized.mp4"
-          poster="/portfolio-assets/rivr-hero-poster.webp"
           eager
           autoPlay
           muted
