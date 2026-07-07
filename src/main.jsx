@@ -256,7 +256,8 @@ function Hero() {
       <div className="hero-frame">
         <DeferredVideo
           className="hero-video"
-          src="/portfolio-assets/rivr-hero-loop.mp4"
+          src="/portfolio-assets/rivr-hero-loop-optimized.mp4"
+          poster="/portfolio-assets/rivr-hero-poster.webp"
           eager
           autoPlay
           muted
